@@ -38,10 +38,12 @@ bump-deps: deps vendor
 deps:
 	go get -t -v ./...
 
+bootstrap: godep
+	godep restore
+
 vendor: godep
 	git submodule update --init --recursive
 	godep save ./...
-
 
 # Embed static assets
 embed: js rice
