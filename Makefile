@@ -36,7 +36,7 @@ build-dist: godep
 bump-deps: deps vendor
 
 deps:
-	go get -u -t -v ./...
+	go get -t -v ./...
 
 vendor: godep
 	git submodule update --init --recursive
