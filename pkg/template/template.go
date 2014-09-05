@@ -52,6 +52,8 @@ func init() {
 		"register.html",
 		"install.html",
 
+		"check_run.html",
+
 		// these templates use the default.html
 		// shared layout
 		"403.html",

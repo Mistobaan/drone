@@ -10,6 +10,7 @@ import (
 
 	"code.google.com/p/go.net/websocket"
 	"github.com/GeertJohan/go.rice"
+	"github.com/Mistobaan/drone/pkg/checkrun"
 	"github.com/bmizerany/pat"
 
 	"github.com/drone/drone/pkg/build/docker"
@@ -48,7 +49,7 @@ var (
 
 func main() {
 	// parse command line flags
-	flag.StringVar(&port, "port", ":8080", "")
+	flag.StringVar(&port, "port", ":9090", "")
 	flag.StringVar(&driver, "driver", "sqlite3", "")
 	flag.StringVar(&datasource, "datasource", "drone.sqlite", "")
 	flag.StringVar(&sslcert, "sslcert", "", "")
@@ -140,6 +141,9 @@ func setupHandlers() {
 	)
 
 	m := pat.New()
+
+	m.Get("/checkrun", handler.ErrorHandler(checkrun.Dashboard))
+
 	m.Get("/login", handler.ErrorHandler(handler.Login))
 	m.Post("/login", handler.ErrorHandler(handler.Authorize))
 	m.Get("/logout", handler.ErrorHandler(handler.Logout))
@@ -254,6 +258,8 @@ func setupHandlers() {
 		// our multiplexer is a bit finnicky and therefore requires
 		// us to strip any trailing slashes in order to correctly
 		// find and match a route.
+		log.Println(r.Method, r.URL.Path)
+
 		if r.URL.Path != "/" && strings.HasSuffix(r.URL.Path, "/") {
 			http.Redirect(w, r, r.URL.Path[:len(r.URL.Path)-1], http.StatusSeeOther)
 			return

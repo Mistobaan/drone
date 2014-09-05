@@ -29,9 +29,11 @@ build:
 	go build -o bin/drone -ldflags "-X main.version $(VERSION)dev-$(SHA)" $(SELFPKG)/cmd/drone
 	go build -o bin/droned -ldflags "-X main.version $(VERSION)dev-$(SHA)" $(SELFPKG)/cmd/droned
 
-build-dist: godep
-	godep go build -o bin/drone -ldflags "-X main.version $(VERSION)-$(SHA)" $(SELFPKG)/cmd/drone
-	godep go build -o bin/droned -ldflags "-X main.version $(VERSION)-$(SHA)" $(SELFPKG)/cmd/droned
+build-dist: godep droned
+	godep go build -a -o bin/drone -ldflags "-X main.version $(VERSION)-$(SHA)" $(SELFPKG)/cmd/drone
+
+droned: embed
+	godep go build -a -o bin/droned -ldflags "-X main.version $(VERSION)-$(SHA)" $(SELFPKG)/cmd/droned
 
 bump-deps: deps vendor
 
