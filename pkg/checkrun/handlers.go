@@ -3,8 +3,8 @@ package checkrun
 import (
 	"net/http"
 
-	"github.com/Mistobaan/drone/pkg/build/docker"
-	"github.com/Mistobaan/drone/pkg/handler"
+	"github.com/drone/drone/pkg/build/docker"
+	"github.com/drone/drone/pkg/handler"
 )
 
 type User struct {

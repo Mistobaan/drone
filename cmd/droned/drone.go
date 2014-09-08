@@ -10,7 +10,7 @@ import (
 
 	"code.google.com/p/go.net/websocket"
 	"github.com/GeertJohan/go.rice"
-	"github.com/Mistobaan/drone/pkg/checkrun"
+	"github.com/drone/drone/pkg/checkrun"
 	"github.com/bmizerany/pat"
 
 	"github.com/drone/drone/pkg/build/docker"
