@@ -7,11 +7,17 @@ import (
 	"github.com/Mistobaan/drone/pkg/handler"
 )
 
+type User struct {
+	Name string
+	Image string
+}
+
 type CheckRun struct {
 	Status string
 }
 
 type CheckRunDashboard struct {
+User *User
 	Images []*docker.Images
 }
 
@@ -24,5 +30,5 @@ func Dashboard(w http.ResponseWriter, req *http.Request) error {
 		return err
 	}
 
-	return handler.RenderTemplate(w, "check_run.html", &CheckRunDashboard{images})
+	return handler.RenderTemplate(w, "check_run.html", &CheckRunDashboard{&User{"checkrun", ""},  images})
 }

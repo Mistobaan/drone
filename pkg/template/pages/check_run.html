@@ -27,13 +27,6 @@
                 <img src="{{.User.Image}}" />
               </a>
             </li>
-            {{ range .Teams }}
-            <li>
-              <a class="thumbnail" href="/dashboard/team/{{.Slug}}">
-                <img src="{{.Image}}" />
-              </a>
-            </li>
-            {{ end }}
           </ul>
           <span class="label">switch dashboard</span>
           <span>Recent Builds</span>
@@ -41,47 +34,13 @@
 
  {{ range $image := .Images }}
 
- <li>{{ $image.ID }}  <b>{{ $image.Size }}</b></li>
-
+ <li>{{ $image.Created }}  {{ $image.ID }}  <b>{{ $image.Size }}</b></li>
+  {{ range $tag := $image.RepoTags }}
+	<b>{{ $tag }}</b>
+  {{ end }}  
  {{end}}
 
-        {{ if .Commits }}
-        <ul class="commit-list">
-          {{ range $commit := .Commits }}
-          <li>
-            <a href="/{{$commit.Slug}}/commit/{{$commit.Hash}}?branch={{$commit.Branch}}" class="btn btn-{{$commit.Status}}"></a>
-            <h3>
-              <a href="/{{$commit.Slug}}">{{$commit.Owner}} / {{$commit.Name}}</a>
-              <small class="timeago" title="{{$commit.CreatedString}}"></small>
-              {{ if $commit.PullRequest }}
-                <p>opened pull request <a href="/{{$commit.Slug}}/commit/{{$commit.Hash}}?branch={{$commit.Branch}}"># {{$commit.PullRequest}}</a></p>
-              {{ else }}
-                <p>commit <a href="/{{$commit.Slug}}/commit/{{$commit.Hash}}?branch={{$commit.Branch}}">{{$commit.HashShort}}</a> to <a href="/{{$commit.Slug}}?branch={{$commit.Branch}}">{{$commit.Branch}}</a> branch</p>
-              {{ end }}
-            </h3>
-          </li>
-          {{ end }}
-        </ul>
-        {{ end }}
-      </div><!-- ./col-xs-8 -->
-
-      <div class="col-xs-4" style="padding-left:20px;">
-        <ul class="nav nav-pills nav-stacked nav-repos">
-          {{ range $repo := .Repos }}
-          <li>
-            <a href="/{{$repo.Slug}}">
-              <span>{{$repo.Owner}} / </span>
-              <span>{{$repo.Name}}</span>
-            </a>
-          </li>
-          {{ end }}
-        </ul>
-      </div><!-- ./col-xs-4 -->
-    </div><!-- ./row -->
-
-  </div><!-- ./container -->
 {{ end }}
-
 {{ define "script" }}
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.1.0/jquery.timeago.js"></script>
   <script>
